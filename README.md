@@ -18,6 +18,8 @@ The solutions we use will be self-wrought code or imported from open source libr
  * Justification (why does change detection matter)
  * Offline vs. Online change detection
  * References and Further Reading
+[View in ipynb nbviewer] [1]
+
 
 * Section 1
 
@@ -26,6 +28,7 @@ The solutions we use will be self-wrought code or imported from open source libr
  * A "static mean" change detector
    * Recent (amplitude) vs global (mean) detector 
  * Framing the problem and some utility code  #maybe move this to an appendix?
+[View in ipynb nbviewer] [2]
 
 * Section 2
  * Limitation of the static mean detector
@@ -36,13 +39,19 @@ The solutions we use will be self-wrought code or imported from open source libr
  * Streaming windows
  * Wilford's algorithm
  * A Z-score based detector
-  
+[View in ipynb nbviewer] [3]
+
 * Section 3 
  * Limitations of the Z-score change detector
  * Trend, slowly moving signals
   * Signal 3
  * 
- 
+[View in ipynb nbviewer] [4] 
+
+[1]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_00_Introduction.ipynb
+[1]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_00_Introduction.ipynb
+[1]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_00_Introduction.ipynb
+[1]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_00_Introduction.ipynb
 
 ##More things to cover
 Add additional sections to cover these:
