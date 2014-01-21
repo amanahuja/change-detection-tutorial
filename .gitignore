@@ -7,6 +7,9 @@
 *.swp
 *.swo
 
+# Ipython notebook
+ipynb/.ipynb_checkpoints/
+
 # Packages
 *.egg
 *.egg-info
