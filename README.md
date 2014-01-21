@@ -55,9 +55,9 @@ The solutions we use will be self-wrought code or imported from open source libr
 
 
 [1]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_00_Introduction.ipynb
-[2]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_00_Introduction.ipynb
-[3]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_00_Introduction.ipynb
-[4]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_00_Introduction.ipynb
+[2]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_01_Trivial.ipynb
+[3]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_02_Windows.ipynb
+[4]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_tmp_all.ipynb
 
 ##More things to cover
 Add additional sections to cover these:
