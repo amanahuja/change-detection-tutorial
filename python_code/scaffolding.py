@@ -341,29 +341,122 @@ residuals = run_online_simulation(sig1, blank_detector)
 # ### Convert to ipynb
 # Convert this ipynb to python file so we can import it from other notebooks in the tutorial
 
-# In[28]:
+# In[30]:
 
 if __name__ == "__main__": 
     get_ipython().system(u'ipython nbconvert --to python scaffolding.ipynb')
 
 
-# Out[28]:
+# Out[30]:
 
 #     [NbConvertApp] Using existing profile dir: u'/home/aman/.config/ipython/profile_default'
-#     [NbConvertApp] Converting notebook scaffolding.ipynb to python
-#     [NbConvertApp] Support files will be in scaffolding_files/
-#     [NbConvertApp] Loaded template python.tpl
-#     [NbConvertApp] Writing 11152 bytes to scaffolding.py
-# 
-
-# In[29]:
-
-print "NAME: :",  __name__
-
-
-# Out[29]:
-
-#     NAME: : __main__
+#     [NbConvertApp] WARNING | pattern u'../python_code/scaffolding.ipynb' matched no files
+#     This application is used to convert notebook files (*.ipynb) to various other
+#     formats.
+#     
+#     WARNING: THE COMMANDLINE INTERFACE MAY CHANGE IN FUTURE RELEASES.
+#     
+#     Options
+#     -------
+#     
+#     Arguments that take values are actually convenience aliases to full
+#     Configurables, whose aliases are listed on the help line. For more information
+#     on full configurables, see '--help-all'.
+#     
+#     --debug
+#         set log level to logging.DEBUG (maximize logging output)
+#     --init
+#         Initialize profile with default config files.  This is equivalent
+#         to running `ipython profile create <profile>` prior to startup.
+#     --quiet
+#         set log level to logging.CRITICAL (minimize logging output)
+#     --stdout
+#         Write notebook output to stdout instead of files.
+#     --profile=<Unicode> (BaseIPythonApplication.profile)
+#         Default: u'default'
+#         The IPython profile to use.
+#     --ipython-dir=<Unicode> (BaseIPythonApplication.ipython_dir)
+#         Default: u'/home/aman/.config/ipython'
+#         The name of the IPython directory. This directory is used for logging
+#         configuration (through profiles), history storage, etc. The default is
+#         usually $HOME/.ipython. This options can also be specified through the
+#         environment variable IPYTHONDIR.
+#     --writer=<DottedObjectName> (NbConvertApp.writer_class)
+#         Default: 'FilesWriter'
+#         Writer class used to write the  results of the conversion
+#     --log-level=<Enum> (Application.log_level)
+#         Default: 30
+#         Choices: (0, 10, 20, 30, 40, 50, 'DEBUG', 'INFO', 'WARN', 'ERROR', 'CRITICAL')
+#         Set the log level by value or name.
+#     --to=<CaselessStrEnum> (NbConvertApp.export_format)
+#         Default: 'html'
+#         Choices: ['custom', 'html', 'latex', 'markdown', 'python', 'rst', 'slides']
+#         The export format to be used.
+#     --template=<Unicode> (Exporter.template_file)
+#         Default: u'default'
+#         Name of the template file to use
+#     --output=<Unicode> (NbConvertApp.output_base)
+#         Default: ''
+#         overwrite base name use for output files. can only  be use when converting
+#         one notebook at a time.
+#     --post=<DottedOrNone> (NbConvertApp.post_processor_class)
+#         Default: u''
+#         PostProcessor class used to write the  results of the conversion
+#     --config=<Unicode> (BaseIPythonApplication.extra_config_file)
+#         Default: u''
+#         Path to an extra config file to load.
+#         If specified, load this config file in addition to any other IPython config.
+#     --profile-dir=<Unicode> (ProfileDir.location)
+#         Default: u''
+#         Set the profile location directly. This overrides the logic used by the
+#         `profile` option.
+#     
+#     To see all available configurables, use `--help-all`
+#     
+#     Examples
+#     --------
+#     
+#         The simplest way to use nbconvert is
+#         
+#         > ipython nbconvert mynotebook.ipynb
+#         
+#         which will convert mynotebook.ipynb to the default format (probably HTML).
+#         
+#         You can specify the export format with `--to`.
+#         Options include ['custom', 'html', 'latex', 'markdown', 'python', 'rst', 'slides']
+#         
+#         > ipython nbconvert --to latex mynotebook.ipnynb
+#         
+#         Both HTML and LaTeX support multiple output templates. LaTeX includes
+#         'basic', 'book', and 'article'.  HTML includes 'basic' and 'full'.  You 
+#         can specify the flavor of the format used.
+#         
+#         > ipython nbconvert --to html --template basic mynotebook.ipynb
+#         
+#         You can also pipe the output to stdout, rather than a file
+#         
+#         > ipython nbconvert mynotebook.ipynb --stdout
+#         
+#         A post-processor can be used to compile a PDF
+#         
+#         > ipython nbconvert mynotebook.ipynb --to latex --post PDF
+#         
+#         You can get (and serve) a Reveal.js-powered slideshow
+#         
+#         > ipython nbconvert myslides.ipynb --to slides --post serve
+#         
+#         Multiple notebooks can be given at the command line in a couple of 
+#         different ways:
+#         
+#         > ipython nbconvert notebook*.ipynb
+#         > ipython nbconvert notebook1.ipynb notebook2.ipynb
+#         
+#         or you can specify the notebooks list in a config file, containing::
+#         
+#             c.NbConvertApp.notebooks = ["my_notebook.ipynb"]
+#         
+#         > ipython nbconvert --config mycfg.py
+#     
 # 
 
 # In[ ]:
