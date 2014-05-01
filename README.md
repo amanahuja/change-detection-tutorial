@@ -5,7 +5,32 @@ change-detection-tutorial
 
 We want to be able to detect change in a signal, or an ordered/chronological collection of data points. We'll probably use scalar values for each data point, but perhaps we can also consider vector values as well. 
 
-## Approach
+## How to use this Tutorial
+
+The simplest way to use the tutorial is to view the output only. You will not be able to edit and experiment with the code, but you will be able to follow along. 
+
+ 1. Use the links to nbviewer.ipython.org to view the ipython notebooks. 
+ 2. (Coming soon) Navigate to the PDF directory to view the notebooks auto-converted to PDF format. 
+
+The recommended way to use this tutorial is to clone the repo to your machine and run the ipython notebooks locally. Follow these steps: 
+
+    ## 1. Clone the repo to a new directory on your machine
+    include command line example code
+    
+    ## 2. Set up a virtual environment using virtualenv or conda, and activate it. 
+    # using conda
+    # using virtualenv
+    
+    ## 3. Install prerequisites
+    # TODO: insert a requirements.txt
+
+    ## 4. Start an ipython notebook server
+    ipython notebook 
+    
+    ## 5. Navigate to the nb server url in a browser
+
+
+## Tutorial Approach
 We'll start with the simplest signal we can imagine, and the simplest change detection method(s). From there we'll add signal complexity step by step in such a way that we demonstrate the limitations of previously discussed methods and have an excuse to consider more sophisticated approaches. 
 
 The solutions we use will be self-wrought code or imported from open source libraries, whatever seems appropriate for the moment. 
