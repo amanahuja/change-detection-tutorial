@@ -9,6 +9,7 @@
 
 # Ipython notebook
 ipynb/.ipynb_checkpoints/
+.ipynb_checkpoints/
 
 # Packages
 *.egg
