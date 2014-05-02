@@ -1,4 +1,6 @@
 
+# coding: utf-8
+
 # In[1]:
 
 # Modified Stylesheet for notebook.
@@ -9,10 +11,6 @@ def css_styling():
 
 css_styling()
 
-
-# Out[1]:
-
-#     <IPython.core.display.HTML at 0x2e48210>
 
 # #Change Detection Tutorial
 # ##Some Scaffolding
@@ -26,19 +24,14 @@ css_styling()
 #   * Plot results and output conveniently.
 # 
 
-# In[4]:
+# In[2]:
 
 get_ipython().magic(u'matplotlib')
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-# Out[4]:
-
-#     Using matplotlib backend: module://IPython.kernel.zmq.pylab.backend_inline
-# 
-
-# In[5]:
+# In[3]:
 
 from collections import defaultdict
 np.random.seed(seed=111111)
@@ -76,45 +69,45 @@ np.set_printoptions(precision=3, suppress=True)
 # 
 # 
 
-# An online simulation function might look something like this: 
-# ----------------------
-# (pseudocode)
-# 
-# function online_simulator(signal, cd_algorithm, stopping rules): 
-#   
-#   Iterate through the signal, passing data points to the algorithm. FOR EACH data point
-#     Calculate residuals
-#     Compare residuals with the stopping rule(s)
-#     IF the stopping rule is triggered
-#       RETURN (True, residuals, stopping_rule_triggered)
-# 
-#   At the end of the signal, IF the stopping rule is not triggered
-#      THEN return (False, residuals)
-# 
+                An online simulation function might look something like this: 
+----------------------
+(pseudocode)
 
-# I am not clear on 'Essentially the algorithm is just calculating residuals and updating them for each new value passed.'
-#  -- [Blaine]
+function online_simulator(signal, cd_algorithm, stopping rules): 
+  
+  Iterate through the signal, passing data points to the algorithm. FOR EACH data point
+    Calculate residuals
+    Compare residuals with the stopping rule(s)
+    IF the stopping rule is triggered
+      RETURN (True, residuals, stopping_rule_triggered)
 
-# What about the change detection algorithm, what does that look like? 
-# 
-# Essentially the algorithm is just calculating residuals and updating them for each new value passed. 
-# -------------------------
-# (pseudocode)
-# 
-# class cd_algorithm:
-#    Initialization
-#       initialize residuals
-# 
-#    METHOD step FOR EACH new_signal_value
-#       Update residuals
-#       Check if Stopping Rules have been triggered
-#       IF rules_triggered
-#         RETURN (True, residuals, signal_size, stopping_rule_triggered)
-#       
-# ----
-# actually we'll make that step method into a generator, so we can yield values for each new value of the signal.
+  At the end of the signal, IF the stopping rule is not triggered
+     THEN return (False, residuals)
 
-# In[6]:
+                
+                I am not clear on 'Essentially the algorithm is just calculating residuals and updating them for each new value passed.'
+ -- [Blaine]
+                
+                What about the change detection algorithm, what does that look like? 
+
+Essentially the algorithm is just calculating residuals and updating them for each new value passed. 
+-------------------------
+(pseudocode)
+
+class cd_algorithm:
+   Initialization
+      initialize residuals
+
+   METHOD step FOR EACH new_signal_value
+      Update residuals
+      Check if Stopping Rules have been triggered
+      IF rules_triggered
+        RETURN (True, residuals, signal_size, stopping_rule_triggered)
+      
+----
+actually we'll make that step method into a generator, so we can yield values for each new value of the signal.
+                
+# In[4]:
 
 def dict_to_arrays(ddict):
     """
@@ -127,7 +120,7 @@ def dict_to_arrays(ddict):
     return new_dict
 
 
-# In[7]:
+# In[5]:
 
 def online_simulator(signal, change_detector): 
     """
@@ -135,6 +128,12 @@ def online_simulator(signal, change_detector):
     --- 
     Given a signal and a change detector, this simulator passes one signal data point at a time to
     the change detector and processes the results. 
+    
+    inputs
+    ------------------------
+    signal: np.array
+    change_detector: class change_detector
+    
     """
     #Initiate
     #change_detector = cd_algorithm()
@@ -164,10 +163,10 @@ def online_simulator(signal, change_detector):
     return (False, dict_to_arrays(all_residuals))
 
 
-# What is the type/object of the signal that is being iterated over?
-# -- [Blaine]
-
-# In[8]:
+                What is the type/object of the signal that is being iterated over?
+-- [Blaine]
+                
+# In[6]:
 
 def run_online_simulation(signal, change_detector, scale=True): 
     """Run simulation and print results"""
@@ -183,7 +182,7 @@ def run_online_simulation(signal, change_detector, scale=True):
     return residuals
 
 
-# In[9]:
+# In[7]:
 
 class change_detector(object):
     """
@@ -244,7 +243,7 @@ class change_detector(object):
         return self._step(new_signal_value)
 
 
-# In[10]:
+# In[8]:
 
 def print_sim_results(signal, results, **kwargs):
     """
@@ -266,7 +265,7 @@ def print_sim_results(signal, results, **kwargs):
         plot_signal_and_residuals(signal, residuals, **kwargs)
 
 
-# In[11]:
+# In[9]:
 
 def plot_signal_and_residuals(signal, residuals=None, stop_point=None, scale=True):
     """Convenience function to generate plots of the signal and the residuals"""
@@ -316,7 +315,7 @@ def plot_signal_and_residuals(signal, residuals=None, stop_point=None, scale=Tru
 
 # ## Demo the results
 
-# In[16]:
+# In[10]:
 
 """
 Uncomment the following code to output the demo.
@@ -332,134 +331,18 @@ residuals = run_online_simulation(sig1, blank_detector)
 '''
 
 
-# Out[16]:
-
-#     '\nsig1 = np.ones(1000)\nsig1[:500] = sig1[:500] * 50\nsig1[500:] = sig1[500:] * 40\n\nblank_detector = change_detector()\nresiduals = run_online_simulation(sig1, blank_detector)\n'
-
-# (Note that the stopping rule will not be triggered, because we haven't created a stopping rule yet.)
-
+                (Note that the stopping rule will not be triggered, because we haven't created a stopping rule yet.)
+                
 # ### Convert to ipynb
 # Convert this ipynb to python file so we can import it from other notebooks in the tutorial
 
-# In[30]:
+# In[11]:
 
 if __name__ == "__main__": 
-    get_ipython().system(u'ipython nbconvert --to python scaffolding.ipynb')
+    get_ipython().system(u"ipython nbconvert --to python scaffolding.ipynb --output='../python_code/scaffolding'")
 
 
-# Out[30]:
-
-#     [NbConvertApp] Using existing profile dir: u'/home/aman/.config/ipython/profile_default'
-#     [NbConvertApp] WARNING | pattern u'../python_code/scaffolding.ipynb' matched no files
-#     This application is used to convert notebook files (*.ipynb) to various other
-#     formats.
-#     
-#     WARNING: THE COMMANDLINE INTERFACE MAY CHANGE IN FUTURE RELEASES.
-#     
-#     Options
-#     -------
-#     
-#     Arguments that take values are actually convenience aliases to full
-#     Configurables, whose aliases are listed on the help line. For more information
-#     on full configurables, see '--help-all'.
-#     
-#     --debug
-#         set log level to logging.DEBUG (maximize logging output)
-#     --init
-#         Initialize profile with default config files.  This is equivalent
-#         to running `ipython profile create <profile>` prior to startup.
-#     --quiet
-#         set log level to logging.CRITICAL (minimize logging output)
-#     --stdout
-#         Write notebook output to stdout instead of files.
-#     --profile=<Unicode> (BaseIPythonApplication.profile)
-#         Default: u'default'
-#         The IPython profile to use.
-#     --ipython-dir=<Unicode> (BaseIPythonApplication.ipython_dir)
-#         Default: u'/home/aman/.config/ipython'
-#         The name of the IPython directory. This directory is used for logging
-#         configuration (through profiles), history storage, etc. The default is
-#         usually $HOME/.ipython. This options can also be specified through the
-#         environment variable IPYTHONDIR.
-#     --writer=<DottedObjectName> (NbConvertApp.writer_class)
-#         Default: 'FilesWriter'
-#         Writer class used to write the  results of the conversion
-#     --log-level=<Enum> (Application.log_level)
-#         Default: 30
-#         Choices: (0, 10, 20, 30, 40, 50, 'DEBUG', 'INFO', 'WARN', 'ERROR', 'CRITICAL')
-#         Set the log level by value or name.
-#     --to=<CaselessStrEnum> (NbConvertApp.export_format)
-#         Default: 'html'
-#         Choices: ['custom', 'html', 'latex', 'markdown', 'python', 'rst', 'slides']
-#         The export format to be used.
-#     --template=<Unicode> (Exporter.template_file)
-#         Default: u'default'
-#         Name of the template file to use
-#     --output=<Unicode> (NbConvertApp.output_base)
-#         Default: ''
-#         overwrite base name use for output files. can only  be use when converting
-#         one notebook at a time.
-#     --post=<DottedOrNone> (NbConvertApp.post_processor_class)
-#         Default: u''
-#         PostProcessor class used to write the  results of the conversion
-#     --config=<Unicode> (BaseIPythonApplication.extra_config_file)
-#         Default: u''
-#         Path to an extra config file to load.
-#         If specified, load this config file in addition to any other IPython config.
-#     --profile-dir=<Unicode> (ProfileDir.location)
-#         Default: u''
-#         Set the profile location directly. This overrides the logic used by the
-#         `profile` option.
-#     
-#     To see all available configurables, use `--help-all`
-#     
-#     Examples
-#     --------
-#     
-#         The simplest way to use nbconvert is
-#         
-#         > ipython nbconvert mynotebook.ipynb
-#         
-#         which will convert mynotebook.ipynb to the default format (probably HTML).
-#         
-#         You can specify the export format with `--to`.
-#         Options include ['custom', 'html', 'latex', 'markdown', 'python', 'rst', 'slides']
-#         
-#         > ipython nbconvert --to latex mynotebook.ipnynb
-#         
-#         Both HTML and LaTeX support multiple output templates. LaTeX includes
-#         'basic', 'book', and 'article'.  HTML includes 'basic' and 'full'.  You 
-#         can specify the flavor of the format used.
-#         
-#         > ipython nbconvert --to html --template basic mynotebook.ipynb
-#         
-#         You can also pipe the output to stdout, rather than a file
-#         
-#         > ipython nbconvert mynotebook.ipynb --stdout
-#         
-#         A post-processor can be used to compile a PDF
-#         
-#         > ipython nbconvert mynotebook.ipynb --to latex --post PDF
-#         
-#         You can get (and serve) a Reveal.js-powered slideshow
-#         
-#         > ipython nbconvert myslides.ipynb --to slides --post serve
-#         
-#         Multiple notebooks can be given at the command line in a couple of 
-#         different ways:
-#         
-#         > ipython nbconvert notebook*.ipynb
-#         > ipython nbconvert notebook1.ipynb notebook2.ipynb
-#         
-#         or you can specify the notebooks list in a config file, containing::
-#         
-#             c.NbConvertApp.notebooks = ["my_notebook.ipynb"]
-#         
-#         > ipython nbconvert --config mycfg.py
-#     
-# 
-
-# In[ ]:
+# In[11]:
 
 
 

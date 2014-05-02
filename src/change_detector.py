@@ -1,0 +1,189 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from collections import defaultdict
+
+
+class ChangeDetector(object):
+    """
+    A change detection algorithm.
+
+    The algorithm calculates residuals and updates them for each new value
+    passed. Residuals are checked against stopping rules at each change,
+    yielding either True or False, accordingly.
+    """
+
+    def __init__(self):
+        self.rules_triggered = False
+        # Interim and calculated values
+        self.signal_size = 0
+        self.total_val = 0
+
+        # properties ending in underscore (_) are treated as
+        # final residual values (for plotting, printing, etc)
+        self.approx_mean_ = np.nan
+
+    def update_residuals(self, new_signal_value):
+        """
+        Updates residuals.
+        Override this method when writing your own change detector based on
+        this class.
+        """
+        # Update your residuals here
+        # The following examples are generally useful
+        self.signal_size += 1
+        self.total_val += new_signal_value
+
+        # Final residuals
+        self.approx_mean_ = self.total_val / self.signal_size
+
+    def check_stopping_rules(self, new_signal_value):
+        """
+        Check Stopping Rules.
+        Override this method when writing your own change detector based on
+        this class
+        """
+        # Reset?
+        # self.rules_triggered = False
+
+        # Implemented your stopping rules here
+        # Set self.rules_triggered to True when triggered
+        pass
+
+        return self.rules_triggered
+
+    """
+    Internal methods
+    -------------------
+    leave the following methods alone. You should only need to override or edit
+    above this line in order to implement your own change detector.
+    """
+
+    @property
+    def residuals_(self):
+        return self._get_residual_dict()
+
+    def _get_residual_dict(self):
+        """create a dictionary of residuals to return.
+        Inclues all class and instance variables ending in '_'
+        """
+        residuals_dict = {}
+        for k, v in self.__dict__.iteritems():
+            if k.endswith('_'):
+                residuals_dict[k] = v
+
+        return residuals_dict
+
+    def _step(self, new_signal_value):
+        """Internal method to "step", digest one new signal point."""
+
+        # Update residuals
+        self.update_residuals(new_signal_value)
+
+        # Compare residuals to stopping_rules
+        self.rules_triggered = self.check_stopping_rules(new_signal_value)
+
+        if self.rules_triggered:
+            yield (True, self._get_residual_dict())
+
+        else:
+            yield (False, self._get_residual_dict())
+
+    def step(self, new_signal_value):
+        return self._step(new_signal_value)
+
+    def __repr__(self):
+        return "Change Detector(triggered={}, residuals={})".format(
+            self.rules_triggered,
+            self.residuals_
+            )
+
+    def run(self, signal, plot=True, scale=True):
+        """
+        Function that simulates an online streaming scenario for change
+        detection experiments.
+
+        Given a signal and a change detector, this simulator passes one signal
+        data point at a time to the change detector and processes the results.
+
+        inputs
+        ------------------------
+        signal: np.array
+        change_detector: class change_detector
+        """
+
+        # Run simulation
+        all_residuals = defaultdict(list)
+        for value in signal:
+            # Step to get residuals and check stopping rules
+            rule_triggered, res = next(self.step(value))
+
+            # Store all residuals for printing only
+            for k, v in res.iteritems():
+                all_residuals[k].append(v)
+
+        def dict_to_arrays(ddict):
+            """Convenience func to bundle residuals into a dict"""
+            new_dict = {}
+            for k, v in ddict.iteritems():
+                new_dict[k] = np.array(v)
+            return new_dict
+
+        residuals = dict_to_arrays(all_residuals)
+
+        # Display results
+        if plot is True:
+            self.print_sim_results(signal, residuals, scale=scale)
+
+        # Return residuals
+        return rule_triggered
+
+    def print_sim_results(self, signal, all_residuals, **kwargs):
+        """Print out the results of our experiment. """
+
+        print "Residuals: {}".format([res for res in all_residuals.viewkeys()])
+
+        # Print results
+        if self.rules_triggered is True:
+            # Length of any residual array tells us when the rule was triggered
+            some_res = all_residuals.itervalues().next()
+            stop_point = len(some_res)
+            # Quick sanity check
+            assert (stop_point > 0) & (stop_point <= len(signal))
+            print "Change detected. Stopping Rule triggered at {}.\n".format(
+                stop_point)
+        else:
+            stop_point = None
+            print "Stopping rule not triggered."
+
+        # Generate axes to plot signal and residuals"""
+        plotcount = 1 + len(all_residuals)
+        fig, axes = plt.subplots(nrows=plotcount, ncols=1, sharex=True,
+                                 figsize=(6, plotcount*3))
+
+        # Plot the signal
+        if plotcount > 1:
+            ax = axes[0]
+        elif plotcount == 1:
+            ax = axes
+
+        ax.plot(signal)
+        ax.set_title('Signal')
+
+        # Scale signal
+        ax.set_ylim(signal.min()*.5, signal.max()*1.5)
+        ax.set_xlim(0, len(signal))
+
+        # Plot a horizontal line where the stop_point is indicated
+        if self.rules_triggered is True:
+            ax.vlines(x=stop_point, ymin=0, ymax=ax.get_ylim()[1],
+                      colors='r', linestyles='dotted')
+
+        # Plot each residual
+        for ii, (res_name, res_values) in enumerate(all_residuals.iteritems()):
+            ax = axes[ii+1]
+            ax.plot(res_values)
+            ax.set_title("Residual #{}: {}".format(ii+1, res_name))
+            ax.set_ylim(res_values.min()*0.5, res_values.max() * 1.5)
+            if stop_point is not None:
+                ax.vlines(x=stop_point, ymin=0, ymax=ax.get_ylim()[1],
+                          colors='r', linestyles='dotted')
