@@ -167,6 +167,7 @@ class ChangeDetector(object):
             ax = axes
 
         ax.plot(signal, 'b.')
+        ax.plot(signal, 'b-', alpha=0.15)
         ax.set_title(signal_name)
 
         # Scale signal
