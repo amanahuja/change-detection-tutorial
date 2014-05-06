@@ -20,7 +20,7 @@ class ChangeDetector(object):
 
         # properties ending in underscore (_) are treated as
         # final residual values (for plotting, printing, etc)
-        self.approx_mean_ = np.nan
+        self.mean_ = np.nan
 
     def update_residuals(self, new_signal_value):
         """
@@ -28,13 +28,10 @@ class ChangeDetector(object):
         Override this method when writing your own change detector based on
         this class.
         """
+        self._update_base_residuals(new_signal_value)
         # Update your residuals here
-        # The following examples are generally useful
-        self.signal_size += 1
-        self.total_val += new_signal_value
-
-        # Final residuals
-        self.approx_mean_ = self.total_val / self.signal_size
+        # Here's an example residual that calculates mean
+        self.mean_ = self.total_val / self.signal_size
 
     def check_stopping_rules(self, new_signal_value):
         """
@@ -62,6 +59,11 @@ class ChangeDetector(object):
     def residuals_(self):
         return self._get_residual_dict()
 
+    def _update_base_residuals(self, new_signal_value):
+        # We'll always use these
+        self.signal_size += 1
+        self.total_val += new_signal_value
+
     def _get_residual_dict(self):
         """create a dictionary of residuals to return.
         Inclues all class and instance variables ending in '_'
@@ -80,13 +82,9 @@ class ChangeDetector(object):
         self.update_residuals(new_signal_value)
 
         # Compare residuals to stopping_rules
-        self.rules_triggered = self.check_stopping_rules(new_signal_value)
+        self.check_stopping_rules(new_signal_value)
 
-        if self.rules_triggered:
-            yield (True, self._get_residual_dict())
-
-        else:
-            yield (False, self._get_residual_dict())
+        yield self._get_residual_dict()
 
     def step(self, new_signal_value):
         return self._step(new_signal_value)
@@ -97,7 +95,7 @@ class ChangeDetector(object):
             self.residuals_
             )
 
-    def run(self, signal, plot=True, scale=True):
+    def run(self, signal, plot=True, **kwargs):
         """
         Function that simulates an online streaming scenario for change
         detection experiments.
@@ -115,11 +113,14 @@ class ChangeDetector(object):
         all_residuals = defaultdict(list)
         for value in signal:
             # Step to get residuals and check stopping rules
-            rule_triggered, res = next(self.step(value))
+            res = next(self.step(value))
 
             # Store all residuals for printing only
             for k, v in res.iteritems():
                 all_residuals[k].append(v)
+
+            if self.rules_triggered is True:
+                break
 
         def dict_to_arrays(ddict):
             """Convenience func to bundle residuals into a dict"""
@@ -132,12 +133,11 @@ class ChangeDetector(object):
 
         # Display results
         if plot is True:
-            self.print_sim_results(signal, residuals, scale=scale)
+            self.print_sim_results(signal, residuals, **kwargs)
 
-        # Return residuals
-        return rule_triggered
+        return self.rules_triggered
 
-    def print_sim_results(self, signal, all_residuals, **kwargs):
+    def print_sim_results(self, signal, all_residuals, signal_name='Signal'):
         """Print out the results of our experiment. """
 
         print "Residuals: {}".format([res for res in all_residuals.viewkeys()])
@@ -158,7 +158,7 @@ class ChangeDetector(object):
         # Generate axes to plot signal and residuals"""
         plotcount = 1 + len(all_residuals)
         fig, axes = plt.subplots(nrows=plotcount, ncols=1, sharex=True,
-                                 figsize=(6, plotcount*3))
+                                 figsize=(12, plotcount*3))
 
         # Plot the signal
         if plotcount > 1:
@@ -166,8 +166,8 @@ class ChangeDetector(object):
         elif plotcount == 1:
             ax = axes
 
-        ax.plot(signal)
-        ax.set_title('Signal')
+        ax.plot(signal, 'b.')
+        ax.set_title(signal_name)
 
         # Scale signal
         ax.set_ylim(signal.min()*.5, signal.max()*1.5)
@@ -181,7 +181,7 @@ class ChangeDetector(object):
         # Plot each residual
         for ii, (res_name, res_values) in enumerate(all_residuals.iteritems()):
             ax = axes[ii+1]
-            ax.plot(res_values)
+            ax.plot(res_values, 'g.', alpha=0.7)
             ax.set_title("Residual #{}: {}".format(ii+1, res_name))
             ax.set_ylim(res_values.min()*0.5, res_values.max() * 1.5)
             if stop_point is not None:
