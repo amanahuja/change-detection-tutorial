@@ -3,6 +3,44 @@ import matplotlib.pyplot as plt
 from collections import defaultdict
 
 
+class BlankDetector(object):
+    """
+    This is a very simple detector which we look at in
+    Section 00 (Introduction) of this tutorial. This serves as a
+    good skeleton on how to override the methods of our base
+    ChangeDetector class.
+    """
+    def __init__(self):
+        super(BlankDetector, self).__init__()
+        # Initialize all variables needed here
+        self.total_val = 0
+
+        # Initialize residuals here.
+        #   All attributes ending with underscore '_' are treated
+        #   as residuals.
+        self.mean_ = np.nan
+
+    def update_residuals(self, new_signal_value):
+        """This method is called for every new signal value.
+        Use this space to update variables and residuals"""
+        self._update_base_residuals(new_signal_value)
+
+        # Update your attributes here
+        self.total_val += new_signal_value
+
+        # Update your residuals here
+        #  Here's an example residual that calculates mean
+        self.mean_ = self.total_val / self.signal_size
+
+    def check_stopping_rules(self, new_signal_value):
+        """This method is called for every new signal value,
+        AFTER the attributes and residuals have been updated.
+        Use this space to check if a stopping rule has been
+        triggered. Set self.rules_triggered to True or False
+        accordingly."""
+        self.rules_triggered = False
+
+
 class ChangeDetector(object):
     """
     A change detection algorithm.
@@ -16,11 +54,12 @@ class ChangeDetector(object):
         self.rules_triggered = False
         # Interim and calculated values
         self.signal_size = 0
-        self.total_val = 0
 
-        # properties ending in underscore (_) are treated as
-        # final residual values (for plotting, printing, etc)
-        self.mean_ = np.nan
+        # Residuals
+        #   All attributes ending in underscore (_) are treated as
+        #   residual values (for plotting, printing, etc)
+        #   e.g. self.mean_ = np.nan
+        pass
 
     def update_residuals(self, new_signal_value):
         """
@@ -30,8 +69,7 @@ class ChangeDetector(object):
         """
         self._update_base_residuals(new_signal_value)
         # Update your residuals here
-        # Here's an example residual that calculates mean
-        self.mean_ = self.total_val / self.signal_size
+        pass
 
     def check_stopping_rules(self, new_signal_value):
         """
@@ -39,14 +77,9 @@ class ChangeDetector(object):
         Override this method when writing your own change detector based on
         this class
         """
-        # Reset?
-        # self.rules_triggered = False
-
-        # Implemented your stopping rules here
+        # Implemente your stopping rules here
         # Set self.rules_triggered to True when triggered
         pass
-
-        return self.rules_triggered
 
     """
     Internal methods
@@ -59,10 +92,18 @@ class ChangeDetector(object):
     def residuals_(self):
         return self._get_residual_dict()
 
-    def _update_base_residuals(self, new_signal_value):
+    def _update_base_residuals(self, x):
+        """
+        Input
+         x: scalar, float.
+            is the new signal value obtained for this step.
+        Base residuals
+         k: int
+            the total signal size seen so far.
+            TEMP: Currently called signal_size for clarity
+        """
         # We'll always use these
         self.signal_size += 1
-        self.total_val += new_signal_value
 
     def _get_residual_dict(self):
         """create a dictionary of residuals to return.
