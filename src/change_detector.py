@@ -187,8 +187,6 @@ class ChangeDetector(object):
             [res for res in residuals_history.viewkeys()]
             )
 
-        print residuals_history
-
         # Print results
         if self.rules_triggered is True:
             # Length of any residual array tells us when the rule was triggered
