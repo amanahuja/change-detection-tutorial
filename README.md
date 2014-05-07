@@ -37,65 +37,62 @@ The solutions we use will be self-wrought code or imported from open source libr
 
 ## Lesson Plan
 
-* Section 0: Introduction 
+* Section 00: Scaffolding
 [View in ipynb nbviewer] [1]
+
+ * Offline vs. Online change detection
+ * ChangeDetector a custom class used for tutorial
+
+
+* Section 01: Introduction
+[View in ipynb nbviewer] [2]
 
  * Introduction  (what is change detection)
  * Justification (why does change detection matter)
- * Offline vs. Online change detection
- * References and Further Reading
 
-
-
-* Section 1
-[View in ipynb nbviewer] [2]
-
- * A trivial signal
-   * Signal 1
- * A "static mean" change detector
-   * Recent (amplitude) vs global (mean) detector 
- * Framing the problem and some utility code  #maybe move this to an appendix?
-
-
-* Section 2
+* Section 02
 [View in ipynb nbviewer] [3]
 
- * Limitation of the static mean detector
-   * Outliers 
-   * Noise
- * A noisy signal (with outliers?)
-   * Signal 2
+ * A "static mean" change detector
+ * Recent (amplitude) vs global (mean) detector 
+
+* Section 03: Windows
+[View in ipynb nbviewer] [4]
+
+ * Outliers 
+ * Noise
  * Streaming windows
- * Wilford's algorithm
  * A Z-score based detector
 
+* Section 04: Welford's Method
+[View in ipynb nbviewer] [5] 
 
-* Section 3 
-[View in ipynb nbviewer] [4] 
+ * Welford's method
 
- * Limitations of the Z-score change detector
- * Trend, slowly moving signals
-   * Signal 3
-
-* (Use case) Section 6
+* Section 05: CUSUM
 [View in ipynb nbviewer] [6] 
 
- * A more complex "real" use case
+ * hyperparameter sensitivity
+ * CUSUM
+
+* (Use case) Section 06: EKG 
+[View in ipynb nbviewer] [7] 
+
  * Anomaly detection in EKG signals
  * @tdunning's method: 
     * Divide signal into windows
     * Build a "dictionary" of windows from a normal signal using kmeans clustering
     * Reconstruct signals using dictionary
     * Devise a trigger based on reconstruction error
-    * 
- * 
 
 
-[1]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_00_Introduction.ipynb
-[2]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_01_Trivial.ipynb
-[3]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_02_Windows.ipynb
-[4]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_tmp_all.ipynb
-[6]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_06_tdunning_method.ipynb
+[1]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_00_scaffolding.ipynb
+[2]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_01_Introduction.ipynb
+[3]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_02_StaticMean.ipynb
+[4]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_03_Windows.ipynb
+[5]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_04_WelfordsMethod.ipynb
+[6]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_05_CUSUM.ipynb
+[7]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_06_tdunning_method.ipynb
 
 ##More things to cover
 Add additional sections to cover these:
