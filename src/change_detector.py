@@ -151,14 +151,14 @@ class ChangeDetector(object):
         """
 
         # Run simulation
-        all_residuals = defaultdict(list)
+        residuals_history = defaultdict(list)
         for value in signal:
             # Step to get residuals and check stopping rules
             res = next(self.step(value))
 
             # Store all residuals for printing only
             for k, v in res.iteritems():
-                all_residuals[k].append(v)
+                residuals_history[k].append(v)
 
             if self.rules_triggered is True:
                 break
@@ -170,23 +170,27 @@ class ChangeDetector(object):
                 new_dict[k] = np.array(v)
             return new_dict
 
-        residuals = dict_to_arrays(all_residuals)
+        residuals_history = dict_to_arrays(residuals_history)
 
         # Display results
         if plot is True:
-            self.print_sim_results(signal, residuals, **kwargs)
+            self.print_sim_results(signal,
+                                   residuals_history, **kwargs)
 
         return self.rules_triggered
 
-    def print_sim_results(self, signal, all_residuals, signal_name='Signal'):
+    def print_sim_results(self, signal,
+                          residuals_history, signal_name='Signal'):
         """Print out the results of our experiment. """
 
-        print "Residuals: {}".format([res for res in all_residuals.viewkeys()])
+        print "Residuals: {}".format(
+            [res for res in residuals_history.viewkeys()]
+            )
 
         # Print results
         if self.rules_triggered is True:
             # Length of any residual array tells us when the rule was triggered
-            some_res = all_residuals.itervalues().next()
+            some_res = residuals_history.itervalues().next()
             stop_point = len(some_res)
             # Quick sanity check
             assert (stop_point > 0) & (stop_point <= len(signal))
@@ -197,7 +201,7 @@ class ChangeDetector(object):
             print "Stopping rule not triggered."
 
         # Generate axes to plot signal and residuals"""
-        plotcount = 1 + len(all_residuals)
+        plotcount = 1 + len(residuals_history)
         fig, axes = plt.subplots(nrows=plotcount, ncols=1, sharex=True,
                                  figsize=(12, plotcount*3))
 
@@ -221,7 +225,8 @@ class ChangeDetector(object):
                       colors='r', linestyles='dotted')
 
         # Plot each residual
-        for ii, (res_name, res_values) in enumerate(all_residuals.iteritems()):
+        for ii, (res_name, res_values) in enumerate(
+                residuals_history.iteritems()):
             ax = axes[ii+1]
             ax.plot(res_values, 'g.', alpha=0.7)
             ax.set_title("Residual #{}: {}".format(ii+1, res_name))
