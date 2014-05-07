@@ -156,7 +156,7 @@ class ChangeDetector(object):
             # Step to get residuals and check stopping rules
             res = next(self.step(value))
 
-            # Store all residuals for printing only
+            # Store residual_history (for plotting only)
             for k, v in res.iteritems():
                 residuals_history[k].append(v)
 
@@ -174,18 +174,20 @@ class ChangeDetector(object):
 
         # Display results
         if plot is True:
-            self.print_sim_results(signal,
-                                   residuals_history, **kwargs)
+            self.display_results(signal,
+                                 residuals_history, **kwargs)
 
         return self.rules_triggered
 
-    def print_sim_results(self, signal,
-                          residuals_history, signal_name='Signal'):
+    def display_results(self, signal,
+                        residuals_history, signal_name='Signal'):
         """Print out the results of our experiment. """
 
         print "Residuals: {}".format(
             [res for res in residuals_history.viewkeys()]
             )
+
+        print residuals_history
 
         # Print results
         if self.rules_triggered is True:
@@ -216,7 +218,9 @@ class ChangeDetector(object):
         ax.set_title(signal_name)
 
         # Scale signal
-        ax.set_ylim(signal.min()*.5, signal.max()*1.5)
+        ax.set_ylim(
+            np.nanmin(signal)*.5,
+            np.nanmax(signal)*1.5)
         ax.set_xlim(0, len(signal))
 
         # Plot a horizontal line where the stop_point is indicated
@@ -230,7 +234,9 @@ class ChangeDetector(object):
             ax = axes[ii+1]
             ax.plot(res_values, 'g.', alpha=0.7)
             ax.set_title("Residual #{}: {}".format(ii+1, res_name))
-            ax.set_ylim(res_values.min()*0.5, res_values.max() * 1.5)
+            ax.set_ylim(
+                np.nanmin(res_values)*0.5,
+                np.nanmax(res_values)*1.5)
             if stop_point is not None:
                 ax.vlines(x=stop_point, ymin=0, ymax=ax.get_ylim()[1],
                           colors='r', linestyles='dotted')
