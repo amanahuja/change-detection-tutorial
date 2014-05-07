@@ -191,7 +191,7 @@ class ChangeDetector(object):
         if self.rules_triggered is True:
             # Length of any residual array tells us when the rule was triggered
             some_res = residuals_history.itervalues().next()
-            stop_point = len(some_res)
+            stop_point = len(some_res) - 1
             # Quick sanity check
             assert (stop_point > 0) & (stop_point <= len(signal))
             print "Change detected. Stopping Rule triggered at {}.\n".format(
