@@ -3,39 +3,38 @@ change-detection-tutorial
 
 ## Goals
 
-We want to be able to detect change in a signal, or an ordered/chronological collection of data points. We'll probably use scalar values for each data point, but perhaps we can also consider vector values as well. 
+We want to detect change in a signal, in an ordered/chronological collection of data points. We'll consider the case where each data point is a scalar value. 
+
+## Tutorial Approach
+
+We'll start with the simplest signals we can imagine, and the simplest change detection method(s). This will allow us to introduce some basic concepts easily. With the fundamentals set, we'll try to tackle some problems that are inspired by "real world" problems. This may add a lot of complexity quickly, and will question some assumptions we made earlier, but hopefully there will be sufficient context to pull that off. 
+
+We  will either fabricate the data or use freely available public data sources. Python (python 2.7) will be used for coding and visualization, from within IPython Notebooks. although the principles are agnostic to choice of programming language. We may use open source python libraries along the way.  
+
 
 ## How to use this Tutorial
 
-The simplest way to use the tutorial is to view the output only. You will not be able to edit and experiment with the code, but you will be able to follow along. 
+The simplest way to use this tutorial is to (only) view the output. You will not be able to edit or experiment with the code, but you will be able to follow along. 
 
- 1. Use the links to nbviewer.ipython.org to view the ipython notebooks. 
- 2. (Coming soon) Navigate to the PDF directory to view the notebooks auto-converted to PDF format. 
+***Simply follow the links to nbviewer.ipython.org to view the IPython notebooks. These links are located in the "Lesson Plan" section of this README. ***
 
-The recommended way to use this tutorial is to clone the repo to your machine and run the ipython notebooks locally. Follow these steps: 
 
-    ## 1. Clone the repo to a new directory on your machine
-    include command line example code
+However, the recommended way to use this tutorial is to clone the repo to your machine and run the ipython notebooks locally. Follow these steps: 
+
+    ## 1. Clone this repo to a new directory on your machine
     
     ## 2. Set up a virtual environment using virtualenv or conda, and activate it. 
-    # using conda
-    # using virtualenv
+
+    ## 3. Install prerequisites listed under requirements.txt
+
+    ## 4. Start an ipython notebook server and navigate to the notebooks in your browser
     
-    ## 3. Install prerequisites
-    # TODO: insert a requirements.txt
+You'll be able to follow along with the tutorial and edit the code as you go, like any IPython Notebook. For more information see http://ipython.org/ipython-doc/stable/notebook/index.html
 
-    ## 4. Start an ipython notebook server
-    ipython notebook 
-    
-    ## 5. Navigate to the nb server url in a browser
-
-
-## Tutorial Approach
-We'll start with the simplest signal we can imagine, and the simplest change detection method(s). From there we'll add signal complexity step by step in such a way that we demonstrate the limitations of previously discussed methods and have an excuse to consider more sophisticated approaches. 
-
-The solutions we use will be self-wrought code or imported from open source libraries, whatever seems appropriate for the moment. 
 
 ## Lesson Plan
+
+Includes links to nbviewer.ipython.org to view the tutorial online. 
 
 * Section 00: Scaffolding
 [View in ipynb nbviewer] [1]
@@ -94,8 +93,10 @@ The solutions we use will be self-wrought code or imported from open source libr
 [6]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_05_CUSUM.ipynb
 [7]: http://nbviewer.ipython.org/github/amanahuja/change-detection-tutorial/blob/master/ipynb/section_06_tdunning_method.ipynb
 
-##More things to cover
-Add additional sections to cover these:
+
+## More things to cover
+
+If there's interest, I may add additional sections to cover these topics:
 
  - likelihood ratio and cumalative sum tests. 
  - the Page-Hinkley Stopping Rule
@@ -106,14 +107,14 @@ Add additional sections to cover these:
 
 Criteria for designing detection algorithms
 (or analyzing their performance)
+
  - mean time b/w false alarms
  - prob of wrong detection [false positives]
  - mean delay to detection 
  - prob of non-detection [false negatives] 
  - accuracy of the estimates of the fault onset time and of magnitude of change
 
-
-##References: 
+## References: 
 
 Papers / Books: 
 
