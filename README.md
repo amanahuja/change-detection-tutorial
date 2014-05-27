@@ -113,18 +113,18 @@ Criteria for designing detection algorithms
  - accuracy of the estimates of the fault onset time and of magnitude of change
 
 
-  
-
 ##References: 
-    
+
+Papers / Books: 
+
     Michèle Basseville
       - "Statistical methods for change detection" (2002)
       - "Detecting Changes in Signals and Systems: A Survey" (1988) Automation, Vol. 2,t, No. 3, pp. 309-326
     Aggarwall. 
       - "Outlier Detection" (2013 **check** )
 
-Also see 
+Also see:
 
-Aman Ahuja
-http://pafnuty.wordpress.com/2013/02/05/reading-log-change-detection-papers-by-basseville/
+ - Aman Ahuja (blog post) -- http://pafnuty.wordpress.com/2013/02/05/reading-log-change-detection-papers-by-basseville/
+ - Ted Dunning's Anomaly Detection solution (github repo): https://github.com/tdunning/anomaly-detection/
 
