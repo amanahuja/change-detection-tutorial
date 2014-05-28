@@ -52,6 +52,7 @@ class ChangeDetector(object):
 
     def __init__(self):
         self.rules_triggered = False
+        self.has_started = False
         # Interim and calculated values
         self.signal_size = 0
 
@@ -118,6 +119,7 @@ class ChangeDetector(object):
 
     def _step(self, new_signal_value):
         """Internal method to "step", digest one new signal point."""
+        self.has_started = True
 
         # Update residuals
         self.update_residuals(new_signal_value)
@@ -136,9 +138,12 @@ class ChangeDetector(object):
             self.residuals_
             )
 
-    def run(self, signal, plot=True, **kwargs):
+
+class OnlineSimulator(object):
+
+    def __init__(self, change_detector, signal):
         """
-        Function that simulates an online streaming scenario for change
+        Simulates an online streaming scenario for change
         detection experiments.
 
         Given a signal and a change detector, this simulator passes one signal
@@ -149,18 +154,29 @@ class ChangeDetector(object):
         signal: np.array
         change_detector: class change_detector
         """
+        self.signal = signal
+        self.change_detector = change_detector
+        self.signal_size = len(signal)
+
+    def run(self, plot=True, **kwargs):
+        signal = self.signal
+        detector = self.change_detector
+
+        # Check
+        if detector.has_started is True:
+            raise Exception("Detector must be re-initialized.")
 
         # Run simulation
         residuals_history = defaultdict(list)
         for value in signal:
             # Step to get residuals and check stopping rules
-            res = next(self.step(value))
+            res = next(detector.step(value))
 
             # Store residual_history (for plotting only)
             for k, v in res.iteritems():
                 residuals_history[k].append(v)
 
-            if self.rules_triggered is True:
+            if detector.rules_triggered is True:
                 break
 
         def dict_to_arrays(ddict):
@@ -171,16 +187,18 @@ class ChangeDetector(object):
             return new_dict
 
         residuals_history = dict_to_arrays(residuals_history)
+        self.residuals_history = residuals_history
 
         # Display results
         if plot is True:
-            self.display_results(signal,
-                                 residuals_history, **kwargs)
+            self.display_results(**kwargs)
 
-        return self.rules_triggered
+        return detector.rules_triggered
 
-    def display_results(self, signal,
-                        residuals_history, signal_name='Signal'):
+    def display_results(self, signal_name='Signal', **kwargs):
+        signal = self.signal
+        detector = self.change_detector
+        residuals_history = self.residuals_history
         """Print out the results of our experiment. """
 
         print "Residuals: {}".format(
@@ -188,7 +206,7 @@ class ChangeDetector(object):
             )
 
         # Print results
-        if self.rules_triggered is True:
+        if detector.rules_triggered is True:
             # Length of any residual array tells us when the rule was triggered
             some_res = residuals_history.itervalues().next()
             stop_point = len(some_res) - 1
@@ -222,7 +240,7 @@ class ChangeDetector(object):
         ax.set_xlim(0, len(signal))
 
         # Plot a horizontal line where the stop_point is indicated
-        if self.rules_triggered is True:
+        if detector.rules_triggered is True:
             ax.vlines(x=stop_point, ymin=0, ymax=ax.get_ylim()[1],
                       colors='r', linestyles='dotted')
 
