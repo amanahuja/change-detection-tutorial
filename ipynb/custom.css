@@ -1,1 +1,43 @@
-<style>    div.cell{        max-width:750px;        margin-left:auto;        margin-right:auto;    }    h1 {        text-align:center;        font-familly:"Charis SIL", serif;    }</style>
+<style>    
+
+.input_prompt {
+    background-color:#dd8855;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+    .cell:first-of-type>.input_prompt{
+        -webkit-border-radius: 5px 30px 5px 30px;
+        -moz-border-radius: 5px 30px 5px 30px;
+        border-radius: 5px 30px 5px 30px;
+    }
+    .cell:last-of-type>.input_prompt{
+        -webkit-border-radius: 5px 30px 5px 30px;
+        -moz-border-radius: 5px 30px 5px 30px;
+        border-radius: 5px 30px 5px 30px;
+    }
+
+
+
+.input > .input_prompt{
+    background-color: #FFF;
+    }
+div.cell{        
+    max-width:750px;        
+    margin-left:auto;       
+    margin-right:auto;    
+    }    
+
+h1 {
+    font-size: 120%;
+    color: #dd8855;
+    text-align:center;        
+    font-familly:"Charis SIL", serif;    
+    }
+
+h2 {
+    font-size: 110%;
+    color: #dd8855;
+    }
+
+</style>
