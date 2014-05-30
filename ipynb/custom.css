@@ -6,18 +6,12 @@
     -moz-border-radius: 10px;
     border-radius: 10px;
 }
-    .cell:first-of-type>.input_prompt{
+    .cell:first-of-type>.input_prompt
+        {
         -webkit-border-radius: 5px 30px 5px 30px;
         -moz-border-radius: 5px 30px 5px 30px;
         border-radius: 5px 30px 5px 30px;
     }
-    .cell:last-of-type>.input_prompt{
-        -webkit-border-radius: 5px 30px 5px 30px;
-        -moz-border-radius: 5px 30px 5px 30px;
-        border-radius: 5px 30px 5px 30px;
-    }
-
-
 
 .input > .input_prompt{
     background-color: #FFF;
