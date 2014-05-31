@@ -126,6 +126,7 @@ Papers / Books:
 
 Also see:
 
+ - Aman Ahuja (blog post) -- http://pafnuty.wordpress.com/2014/05/29/change-detection-tutorial/
  - Aman Ahuja (blog post) -- http://pafnuty.wordpress.com/2013/02/05/reading-log-change-detection-papers-by-basseville/
  - Ted Dunning's Anomaly Detection solution (github repo): https://github.com/tdunning/anomaly-detection/
 
