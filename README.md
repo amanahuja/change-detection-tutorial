@@ -1,5 +1,23 @@
-change-detection-tutorial
-=========================
+# change-detection-tutorial
+
+```md
+Update June 2022
+---
+Hi folks! Thanks for continued interest in this tutorial. 
+
+Much has changed this this tutorial was written, over a couple of free weekends, in 2014. Change detection is even more relevant. There are exciting new tools and libraries available.  Most folks who stumble across this tutorial are already familiar with the basic ideas. 
+
+The python and jupyter ecosystem has also progressed, leaving the notebooks in this tutorial clunky or broken.
+
+I do not have a plan to update the tutorial, as there hasn't been sufficient indication that this would be valuable. However:
+* There are 50+ forks which I have not explored; you may find some of them to be usefully updated. 
+* I will happily review and merge PRs to help update this tutorial. 
+* Please submit an issue if you have a specific questions or request. 
+
+Thanks again!
+
+@amanqa
+```
 
 ## Goals
 
